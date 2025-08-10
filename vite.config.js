@@ -12,6 +12,7 @@ export default defineConfig({
     tailwindcss(),
     // vueDevTools(),
   ],
+  base: "/hexschool_vue_2025/",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
