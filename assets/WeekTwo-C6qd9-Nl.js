@@ -1,1 +1,0 @@
-import{_ as o,c as s,a as t,o as r}from"./index-C64DmEhG.js";const a={},c={class:"w-[300px] h-[300px] bg-amber-200"};function n(_,e){return r(),s("div",c,e[0]||(e[0]=[t("p",null,"第二周",-1)]))}const p=o(a,[["render",n]]);export{p as default};
