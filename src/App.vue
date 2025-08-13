@@ -1,7 +1,9 @@
 <template>
   <nav-bar />
   <div class="pt-[80px]">
-    <RouterView />
+    <div class="h-[calc(100vh-80px)] flex items-center justify-center">
+      <RouterView />
+    </div>
   </div>
 </template>
 <script setup>
