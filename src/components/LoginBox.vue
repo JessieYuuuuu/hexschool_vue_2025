@@ -3,11 +3,11 @@
     <p class="text-center text-xl font-bold">
       {{ isLogin ? '登入' : '註冊' }} TodoList
     </p>
+    <input v-model="userInput.nickname" v-if="!isLogin" type="text" placeholder="請輸入暱稱"
+      class="border-2 border-gray-500 rounded-md p-2 w-full">
     <input v-model="userInput.email" type="email" placeholder="請輸入信箱"
       class="border-2 border-gray-500 rounded-md p-2 w-full">
     <input v-model="userInput.password" type="password" placeholder="請輸入密碼"
-      class="border-2 border-gray-500 rounded-md p-2 w-full">
-    <input v-model="userInput.nickname" v-if="!isLogin" type="text" placeholder="請輸入暱稱"
       class="border-2 border-gray-500 rounded-md p-2 w-full">
   </div>
   <div>
@@ -26,10 +26,11 @@
 import { ref, watch } from 'vue';
 import { regist, login } from '@/api';
 import Swal from "sweetalert2";
+const emits = defineEmits(['login-success']);
 const isLogin = ref(true);
 const userInput = ref({
-  email: '',
-  password: '',
+  email: 'demo@gmail.com',
+  password: 'demo123456',
   nickname: ''
 })
 watch(isLogin, () => {
@@ -47,14 +48,30 @@ const sumib = () => {
       email: userInput.value.email,
       password: userInput.value.password
     }).then(res => {
-      console.log(res);
-      localStorage.setItem('token', res.data.token);
-      window.location.reload();
+      localStorage.setItem('token', res.data?.token);
+      Swal.fire({
+        icon: 'success',
+        title: '登入成功！',
+        confirmButtonText: '確認',
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: 'btn btn-success',
+          popup: 'swal-popup',
+        },
+      }).then(() => {
+        emits('login-success', { name: res.data.nickname, email: userInput.value.email })
+        userInput.value = {
+          email: '',
+          password: '',
+          nickname: ''
+        }
+      })
     }).catch(err => {
+      console.error('err', err);
       Swal.fire({
         icon: 'error',
         title: '登入失敗！',
-        text: err.response.data.message,
+        text: err?.response?.data?.message ?? '請稍後再試',
         showCancelButton: true,
         reverseButtons: true,
         confirmButtonText: '前往註冊',
@@ -77,7 +94,6 @@ const sumib = () => {
           }
           return;
         }
-        console.log(err);
       })
     })
   } else {
@@ -87,9 +103,45 @@ const sumib = () => {
       password: userInput.value.password
       , nickname: userInput.value.nickname,
     }).then(res => {
-      console.log(res)
+      Swal.fire({
+        icon: 'success',
+        title: '註冊成功！',
+        confirmButtonText: '點我登入',
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: 'btn btn-success',
+          popup: 'swal-popup',
+        },
+      }).then(() => {
+        isLogin.value = true;
+        userInput.value = {
+          email: userInput.value.email,
+          password: '',
+          nickname: ''
+        }
+      })
     }).catch(err => {
-      console.log(err)
+      Swal.fire({
+        icon: 'warning',
+        title: '註冊失敗！',
+        text: err?.response?.data?.message ?? '請稍後再試',
+        showConfirmButton: true,
+        confirmButtonText: '重新輸入',
+        iconColor: '#ff7700',
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: 'btn btn-danger',
+          popup: 'swal-popup',
+          icon: 'swal-warning-icon'
+        },
+      })
+    }).then(() => {
+      isLogin.value = false;
+      userInput.value = {
+        email: userInput.value.email,
+        password: '',
+        nickname: userInput.value.nickname
+      }
     })
   }
 }//提交處理
@@ -132,5 +184,14 @@ const sumib = () => {
 :global(.swal-error-icon .swal2-x-mark-line-left),
 :global(.swal-error-icon .swal2-x-mark-line-right) {
   background-color: #ff0000 !important;
+}
+
+/* 警告icon */
+:global(.swal-warning-icon) {
+  border-color: #ff7700 !important;
+}
+
+:global(.swal2-icon-content) {
+  color: #ff7700 !important;
 }
 </style>
