@@ -1,5 +1,7 @@
 import "sweetalert2/src/sweetalert2.scss";
 import "./assets/main.css";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -10,5 +12,6 @@ import router from "./router";
 const app = createApp(App);
 app.use(createPinia());
 app.use(router);
+app.use(ElementPlus);
 
 app.mount("#app");

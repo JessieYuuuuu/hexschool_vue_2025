@@ -4,6 +4,13 @@ export const api = axios.create({
   headers: { "Content-Type": "application/json" },
   timeout: 15000,
 }); //判斷開發環境或線上環境
+api.interceptors.request.use((config) => {
+  const token = sessionStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = token;
+  }
+  return config;
+});
 /* account api */
 // 註冊
 // const data = {
@@ -54,7 +61,7 @@ export const updataTodoList = (id, data) => {
 export const delTodoList = (id) => {
   return api.delete(`/todos/${id}`);
 };
-// 新增代辦事項
+// 變更代辦事項狀態
 export const changeTodoListStatus = (id) => {
   return api.patch(`/todos/${id}/toggle`);
 };

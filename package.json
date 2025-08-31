@@ -15,8 +15,10 @@
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.11.0",
+    "element-plus": "^2.11.1",
     "pinia": "^3.0.3",
     "sweetalert2": "^11.22.5",
     "tailwindcss": "^4.1.11",
