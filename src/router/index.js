@@ -12,27 +12,27 @@ const router = createRouter({
     {
       path: "/week-one",
       name: "第一周作業",
-      component: () => import("../views/WeekOne.vue"),
+      component: () => import("../views/WeeKOne/WeekOne.vue"),
     },
     {
       path: "/week-two",
       name: "第二周作業",
-      component: () => import("../views/WeekTwo.vue"),
+      component: () => import("../views/WeekTwo/WeekTwo.vue"),
     },
     {
       path: "/week-three",
       name: "第三周作業",
-      component: () => import("../views/WeekThree.vue"),
+      component: () => import("../views/WeekThree/WeekThree.vue"),
     },
     {
       path: "/advanced-missions",
       name: "進階作業",
-      component: () => import("../views/AdvancedMissions.vue"),
+      component: () => import("../views/AdvancedMissions/AdvancedMissions.vue"),
     },
     {
       path: "/final-missions",
       name: "最終任務",
-      component: () => import("../views/FinalMissions.vue"),
+      component: () => import("../views/FinalMissions/FinalMissions.vue"),
     },
   ],
 });

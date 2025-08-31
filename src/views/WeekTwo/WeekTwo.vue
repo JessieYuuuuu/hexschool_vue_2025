@@ -18,8 +18,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { logOut } from "@/api";
-import LoginBox from "@/components/LoginBox.vue"
-import ToDoList from "@/components/ToDoList.vue"
+import LoginBox from "@/views/WeekTwo/components/LoginBox.vue"
+import ToDoList from "@/views/WeekTwo/components/ToDoList.vue"
 import FullScreenLoading from "@/components/FullScreenLoading.vue"
 import { getAccessToken } from "@/api";
 const hasLogin = ref(false);

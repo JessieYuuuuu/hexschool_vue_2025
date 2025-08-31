@@ -49,7 +49,7 @@
             </td>
             <td class="border border-gray-400 px-2 py-1 text-center">
               <button class="px-2  rounded" @click="drink.edit = !drink.edit">
-                <img src="../assets/edit-text.png" alt="編輯" class="h-6 w-6 cursor-pointer" />
+                <img src="../../assets/edit-text.png" alt="編輯" class="h-6 w-6 cursor-pointer" />
               </button>
             </td>
           </tr>
