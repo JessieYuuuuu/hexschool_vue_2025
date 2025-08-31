@@ -12,7 +12,6 @@
       </template>
       <login-box v-else @login-success="changeUserInfor" />
     </div>
-
   </div>
 </template>
 

@@ -1,58 +1,62 @@
 <template>
-  <table class="border-collapse border border-gray-400 leading-relaxed py-5 mt-[200px]">
-    <thead class="bg-amber-300">
-      <tr>
-        <th class="w-[200px] border border-gray-400 p-2">品項</th>
-        <th class="w-[200px] border border-gray-400 p-2">描述</th>
-        <th class="w-[200px] border border-gray-400 p-2">價格</th>
-        <th class="w-[150px] border border-gray-400 p-2">庫存</th>
-        <th class="w-[100px] border border-gray-400 p-2">
-          <span>
-            操作
-          </span>
-          <button class="px-2 bg-green-200 rounded" @click="addDrink">+</button>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(drink, idx) in drinks" :key="idx" class="hover:bg-amber-50">
-        <td class="border py-5 border-gray-400 px-2 py-1 text-center">
-          <p v-if="!drink.edit">
-            {{ drink.name }}
-          </p>
-          <input @keydown.enter="drink.edit = !drink.edit" v-else class="border-2 border-amber-700"
-            v-model="drink.name" />
-        </td>
-        <td class="border border-gray-400 px-2 py-1">
-          <p v-if="!drink.edit">
-            {{ drink.description }}
-          </p>
-          <input @keydown.enter="drink.edit = !drink.edit" v-else class="border-2 border-amber-700"
-            v-model="drink.description" />
-        </td>
-        <td class="border border-gray-400 px-2 py-1 text-center">
-          <p v-if="!drink.edit">
-            {{ drink.price }}
-          </p>
-          <input @keydown.enter="drink.edit = !drink.edit" v-else class="border-2 border-amber-700"
-            v-model="drink.price" />
-        </td>
-        <td class="border border-gray-400 px-2 py-1 text-center">
-          <button class="px-2 bg-red-200 rounded" @click="drink.quantity--">-</button>
-          <span class="mx-2">
-            {{ drink.quantity }}
-          </span>
-          <button class="px-2 bg-green-200 rounded" @click="drink.quantity++">+</button>
-        </td>
-        <td class="border border-gray-400 px-2 py-1 text-center">
-          <button class="px-2  rounded" @click="drink.edit = !drink.edit">
-            <img src="../assets/edit-text.png" alt="編輯" class="h-6 w-6 cursor-pointer" />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+  <div class="flex flex-col gap-2 max-h-[calc(100vh-160px)]">
+    <p class="text-center text-xl font-bold mb-5">第一周作業 - 飲料清單管理系統</p>
+    <div class="overflow-y-auto">
+      <table class="border-collapse border border-gray-400 leading-relaxed">
+        <thead class="bg-amber-300">
+          <tr>
+            <th class="w-[200px] border border-gray-400 p-2">品項</th>
+            <th class="w-[200px] border border-gray-400 p-2">描述</th>
+            <th class="w-[200px] border border-gray-400 p-2">價格</th>
+            <th class="w-[150px] border border-gray-400 p-2">庫存</th>
+            <th class="w-[100px] border border-gray-400 p-2">
+              <span>
+                操作
+              </span>
+              <button class="px-2 bg-green-200 rounded" @click="addDrink">+</button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(drink, idx) in drinks" :key="idx" class="hover:bg-amber-50">
+            <td class="border py-5 border-gray-400 px-2 py-1 text-center">
+              <p v-if="!drink.edit">
+                {{ drink.name }}
+              </p>
+              <input @keydown.enter="drink.edit = !drink.edit" v-else class="border-2 border-amber-700"
+                v-model="drink.name" />
+            </td>
+            <td class="border border-gray-400 px-2 py-1">
+              <p v-if="!drink.edit">
+                {{ drink.description }}
+              </p>
+              <input @keydown.enter="drink.edit = !drink.edit" v-else class="border-2 border-amber-700"
+                v-model="drink.description" />
+            </td>
+            <td class="border border-gray-400 px-2 py-1 text-center">
+              <p v-if="!drink.edit">
+                {{ drink.price }}
+              </p>
+              <input @keydown.enter="drink.edit = !drink.edit" v-else class="border-2 border-amber-700"
+                v-model="drink.price" />
+            </td>
+            <td class="border border-gray-400 px-2 py-1 text-center">
+              <button class="px-2 bg-red-200 rounded" @click="drink.quantity--">-</button>
+              <span class="mx-2">
+                {{ drink.quantity }}
+              </span>
+              <button class="px-2 bg-green-200 rounded" @click="drink.quantity++">+</button>
+            </td>
+            <td class="border border-gray-400 px-2 py-1 text-center">
+              <button class="px-2  rounded" @click="drink.edit = !drink.edit">
+                <img src="../assets/edit-text.png" alt="編輯" class="h-6 w-6 cursor-pointer" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 <script setup>
 import { ref } from 'vue';
