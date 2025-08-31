@@ -19,6 +19,21 @@ const router = createRouter({
       name: "第二周作業",
       component: () => import("../views/WeekTwo.vue"),
     },
+    {
+      path: "/week-three",
+      name: "第三周作業",
+      component: () => import("../views/WeekThree.vue"),
+    },
+    {
+      path: "/advanced-missions",
+      name: "進階作業",
+      component: () => import("../views/AdvancedMissions.vue"),
+    },
+    {
+      path: "/final-missions",
+      name: "最終任務",
+      component: () => import("../views/FinalMissions.vue"),
+    },
   ],
 });
 

@@ -25,7 +25,7 @@
         </el-icon>
       </button>
     </div>
-    <ul class="list-disc list-inside mt-4">
+    <ul class="list-disc list-inside my-4 max-h-[300px] overflow-y-auto">
       <li v-for="item in nowList" :key="item.id" class="mb-2 gap-2 list-none flex justify-between">
         <label class="flex items-center gap-2 flex-1">
           <input type="checkbox" v-model="item.status" @keyup.enter="addToDo" @change="
@@ -42,7 +42,7 @@
             </div>
           </div>
         </label>
-        <div class="flex gap-2 text-xl" v-if="!item.status">
+        <div class="flex gap-2 text-xl mr-3" v-if="!item.status">
           <el-icon v-if="editingId === null" color="#165DFF" class="cursor-pointer" @click="startEdit(item.id)">
             <Edit />
           </el-icon>
