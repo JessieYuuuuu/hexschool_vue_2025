@@ -59,7 +59,10 @@ const sumib = () => {
         }
       })
     }).catch(err => {
-      errorSwal({ titel: '登入失敗！', text: err?.response?.data?.message ?? '請稍後再試' }).then((result) => {
+      errorSwal({
+        titel: '登入失敗！', text: err?.response?.data?.message ?? '請稍後再試', confirmButtonText: '前往註冊',
+        cancelButtonText: '我再想想',
+      }).then((result) => {
         if (result.isConfirmed) {
           isLogin.value = false;
           userInput.value = {
