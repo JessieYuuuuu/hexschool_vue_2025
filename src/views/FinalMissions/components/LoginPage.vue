@@ -1,6 +1,7 @@
 <template>
   <!-- login_page -->
   <div id="loginPage" class="bg-yellow">
+    <full-screen-loading :isLoading="loading" />
     <div class="container loginPage h-screen">
       <div class="side">
         <RouterLink to="/" title="回到主頁面"><img class="logoImg"
@@ -11,42 +12,42 @@
           alt="workImg">
       </div>
       <div>
-        <form class="formControls" action="index.html">
+        <form class="formControls" @submit.prevent="debounceSubmit">
           <h2 class="formControls_txt">{{ isLogin ? '最實用的線上代辦事項服務' : '註冊帳號' }}</h2>
-          <text-input :modelValue="userInput.email" label="Email" type="email" labelKey="email"
-            @update:input="val => debounceInput('email', val)" required :error="errors.email"
-            :errorText="errorTexts.email" @updata:change="debounceCheck" />
-          <text-input :modelValue="userInput.nickname" v-if="!isLogin" label="您的暱稱" type="text" labelKey="nickname"
-            @update:input="val => debounceInput('nickname', val)" :error="errors.nickname"
-            :errorText="errorTexts.nickname" @updata:change="debounceCheck" />
-          <text-input :modelValue="userInput.password" label="密碼" type="password" labelKey="password"
-            @update:input="val => debounceInput('password', val)" required :error="errors.password"
-            :errorText="errorTexts.password" @updata:change="debounceCheck" />
-          <text-input :modelValue="userInput.passwordCheck" v-if="!isLogin" label="再次輸入密碼" type="password"
-            labelKey="passwordCheck" @update:input="val => debounceInput('passwordCheck', val)"
-            :error="errors.passwordCheck" :errorText="errorTexts.passwordCheck" @updata:change="debounceCheck" />
-          <input class="formControls_btnSubmit" type="button" @click="onSubmit" :value="isLogin ? '登入' : '註冊帳號'">
-          <!-- <RouterLink class="formControls_btnSubmit text-center" to="/final-todo-list/to-do-list">登入</RouterLink>
-          <RouterLink class="formControls_btnLink" to="/final-todo-list/sign-up-page">註冊帳號</RouterLink> -->
-          <p class="formControls_btnLink">{{ isLogin ? '沒' : '已' }}有帳號？<a @click="isLogin = !isLogin"
-              class="text-blue-800 hover:text-blue-500 cursor-pointer">點我{{ isLogin ?
-                '註冊'
-                : '登入' }}</a></p>
+          <template v-for="input in inputList" :key="input.key">
+            <text-input :modelValue="userInput[input.key]" v-if="input.show" :label="input.label" :type="input.key"
+              :labelKey="input.key" @update:input="val => debounceInput(input.key, val)" required
+              :error="errors[input.key]" :errorText="errorTexts[input.key]" @updata:change="debounceCheck" />
+          </template>
+          <input class="formControls_btnSubmit" type="submit" @click="debounceSubmit" :value="isLogin ? '登入' : '註冊帳號'">
+          <p class="formControls_btnLink">{{ isLogin ? '沒' : '已' }}有帳號？
+            <a @click="isLogin = !isLogin" class="text-blue-800 hover:text-blue-500 cursor-pointer">點我{{ isLogin ?
+              '註冊'
+              : '登入' }}</a>
+          </p>
         </form>
       </div>
     </div>
   </div>
-
 </template>
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { regist, login } from '@/api';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 import { successSwal, errorSwal, warningSwal } from '@/utils';
+import FullScreenLoading from "@/components/FullScreenLoading.vue"
 import TextInput from './TextInput.vue'
 import debounce from 'lodash/debounce';
 const isLogin = ref(true);// 頁面狀態切換
+const loading = ref(false)
+const setLoading = (v) => loading.value = v
+const inputList = computed(() => [
+  { label: 'Email', key: 'email', type: 'email', required: true, show: true },
+  { label: '暱稱', key: 'nickname', type: 'text', required: false, show: !isLogin.value },
+  { label: '密碼', key: 'password', type: 'password', required: true, show: true },
+  { label: '再次輸入密碼', key: 'passwordCheck', type: 'password', required: false, show: !isLogin.value },
+])
 const userInput = ref({
   email: '',
   nickname: '',
@@ -66,8 +67,16 @@ const errorTexts = ref({
   passwordCheck: '與密碼不符'
 });// 驗證錯誤提示
 
-
+const inputReset = () => {
+  userInput.value = {
+    email: userInput.value.email,
+    nickname: '',
+    password: '',
+    passwordCheck: ''
+  }
+}
 const onSubmit = () => {
+  setLoading(true)
   if (isLogin.value) {
     // 登入時
     login({
@@ -91,15 +100,11 @@ const onSubmit = () => {
       }).then((result) => {
         if (result.isConfirmed) {
           isLogin.value = false;
-          userInput.value = {
-            email: userInput.value.email,
-            password: '',
-            nickname: ''
-          }
+          inputReset();
           return;
         }
       })
-    })
+    }).finally(() => setLoading(false))
   } else {
     // 註冊時
     regist({
@@ -109,11 +114,7 @@ const onSubmit = () => {
     }).then(() => {
       successSwal({ title: '註冊成功！', confirmButtonText: '點我登入' }).then(() => {
         isLogin.value = true;
-        userInput.value = {
-          email: userInput.value.email,
-          password: '',
-          nickname: ''
-        }
+        inputReset()
       })
     }).catch(err => {
       warningSwal({
@@ -127,13 +128,14 @@ const onSubmit = () => {
           nickname: userInput.value.nickname
         }
       })
-    })
+    }).finally(() => setLoading(false))
   }
 }// 提交處理
 
 // 輸入框相關
 const debounceInput = debounce((type, val) => { inputUpdata(type, val) }, 300); // 防抖更新輸入框
 const debounceCheck = debounce((type) => { inputCheck(type) }, 300); // 防抖驗證輸入框
+const debounceSubmit = debounce(() => { onSubmit() }, 300); // 防抖驗證輸入框
 const inputUpdata = (type, val) => {
   userInput.value[type] = val;
 }
@@ -177,12 +179,7 @@ watch(isLogin, () => {
     password: false,
     passwordCheck: false
   };
-  userInput.value = {
-    email: userInput.value.email,
-    password: '',
-    nickname: '',
-    passwordCheck: ''
-  }
+  inputReset()
   if (userInput.value.email !== '') inputCheck('email')
 })// 切換登入註冊時清空暱稱及密碼，並再次觸發email驗證
 </script>
