@@ -22,12 +22,13 @@ export const errorSwal = ({
   text = "",
   confirmButtonText = "確認",
   cancelButtonText = "關閉",
+  showCancelButton = true,
 } = {}) => {
   return Swal.fire({
     icon: "error",
     title,
     text,
-    showCancelButton: true,
+    showCancelButton,
     reverseButtons: true,
     confirmButtonText,
     cancelButtonText,
