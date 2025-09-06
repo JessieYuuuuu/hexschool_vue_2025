@@ -137,10 +137,9 @@ const debounceInput = debounce((type, val) => { inputUpdata(type, val) }, 300); 
 const debounceCheck = debounce((type) => { inputCheck(type) }, 300); // 防抖驗證輸入框
 const debounceSubmit = debounce(() => { onSubmit() }, 300); // 防抖驗證輸入框
 const inputUpdata = (type, val) => {
-  userInput.value[type] = val;
+  userInput.value[type] = val.trim();
 }
 const inputCheck = (type) => {
-  console.log('type', type)
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
   if (type === 'email') {

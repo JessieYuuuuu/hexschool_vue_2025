@@ -14,5 +14,4 @@ const props = defineProps({
     default: [],
   }
 });
-console.log(props.list);
 </script>

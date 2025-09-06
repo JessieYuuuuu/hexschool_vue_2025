@@ -22,8 +22,7 @@
         </div>
       </label>
       <div class="flex gap-2 text-xl mr-3 pb-4" v-if="!item.status">
-        <el-icon title="編輯" v-if="editingId === null" color="#165DFF" class="cursor-pointer"
-          @click="startEdit(item.id)">
+        <el-icon title="編輯" v-if="editingId === null" color="#165DFF" class="cursor-pointer" @click="startEdit(item)">
           <Edit />
         </el-icon>
 
@@ -44,8 +43,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { Edit, Delete, Check } from '@element-plus/icons-vue'
-import { successSwal } from '@/utils';
-import cloneDeep from 'lodash/cloneDeep'
+import { successSwal, warningSwal } from '@/utils';
 import { updataTodoList, delTodoList, changeTodoListStatus } from '@/api'
 const props = defineProps({
   data: {
@@ -61,27 +59,34 @@ const emit = defineEmits(['update:refresh', 'update:loading'])
 const setLoading = (v) => emit('update:loading', v)
 
 const filterList = computed(() => {
-  // 先複製一份再排序（未完成在前）
   const sorted = [...props.data].sort((a, b) => Number(a.status) - Number(b.status));
-
   if (props.listStatus === 'done') return sorted.filter(item => item.status);
   if (props.listStatus === 'now') return sorted.filter(item => !item.status);
-  return sorted; // 'all'
+  return sorted;
 });// 根據頁籤篩選出對應狀態列表
 
 //編輯相關設定
 const editingId = ref(null);
-const originCcontent = ref('')
-const startEdit = (item) => { editingId.value = item.id; originCcontent.value = cloneDeep(item.content.trim()) };
+const originContent = ref('')
+const startEdit = (item) => {
+  editingId.value = item.id
+  originContent.value = item.content.trim()
+}
 const confirmEdit = (item) => {
-  // TODO 前後對比
-  if (item.content.trim() === originCcontent.value) {
-    originCcontent.value = ''
-    editingId.value = null;
+  const newContent = (item.content ?? '').trim()
+  if (newContent === originContent.value) {
+    originContent.value = ''
+    editingId.value = null
     return
   }
+  if (!newContent) {
+    warningSwal({ title: '請填寫內容！', showConfirmButton: false })
+    item.content = ''
+    return
+  }
+
   setLoading(true)
-  updataTodoList(item.id, { content: item.content })
+  updataTodoList(item.id, { content: newContent })
     .then(() => { successSwal({ title: '更新成功！' }); emit('update:refresh') })
     .finally(() => { editingId.value = null; setLoading(false) });
 };// 編輯
@@ -107,7 +112,6 @@ const createdTime = (time) => {
   const weekdayShort = weekdayFormatter.format(date).toLowerCase()
   return `${dateTimeString} (${weekdayShort})`;
 }// 待辦時間處理
-console.log('重新掛載')
 </script>
 <style scoped>
 @import "@/assets/normalize.css";
