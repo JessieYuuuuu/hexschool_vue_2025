@@ -5,7 +5,7 @@
     <span class="text-blue-600 cursor-pointer" @click="listStatus = 'all'">
       {{ userTodoList.length }}
     </span>
-    項代辦事項，已完成
+    項待辦事項，已完成
     <span class="text-green-600 cursor-pointer" @click="listStatus = 'done'">
       {{userTodoList.filter(item => item.status).length}}
     </span>
@@ -13,11 +13,11 @@
     <span class="text-red-600 cursor-pointer" @click="listStatus = 'now'">
       {{userTodoList.filter(item => !item.status).length}}
     </span>
-    項代辦事項，加油！
+    項待辦事項，加油！
   </p>
   <div>
     <div class="flex items-center gap-4 w-full mt-2">
-      <input type="text" v-model="todoContent" @keyup.enter="addToDo" placeholder="請輸入代辦事項"
+      <input type="text" v-model="todoContent" @keyup.enter="addToDo" placeholder="請輸入待辦事項"
         class="border p-2 rounded-md flex-1">
       <button class="flex  h-full" type="button" @click="addToDo">
         <el-icon size="20" color="#374151">

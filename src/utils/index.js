@@ -44,16 +44,26 @@ export const errorSwal = ({
 };
 
 //  警告提示
-export const warningSwal = ({ title, text = "", confirmButtonText = "確認" } = {}) => {
+export const warningSwal = ({
+  title,
+  text = "",
+  confirmButtonText = "確認",
+  cancelButtonText = "關閉",
+  showCancelButton = true,
+  showConfirmButton = true,
+} = {}) => {
   return Swal.fire({
     icon: "warning",
     title,
     text,
-    showConfirmButton: true,
+    showCancelButton,
+    showConfirmButton,
+    cancelButtonText,
     confirmButtonText,
     iconColor: "#ff7700",
     buttonsStyling: false,
     customClass: {
+      cancelButton: "swal-btn btn-info",
       confirmButton: "swal-btn btn-danger",
       popup: "swal-popup",
       icon: "swal-warning-icon",

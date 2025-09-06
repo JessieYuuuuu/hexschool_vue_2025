@@ -39,29 +39,29 @@ export const logOut = () => {
 };
 
 /* to-do api */
-// 取得帳號所有代辦事項
+// 取得帳號所有待辦事項
 export const getTodoList = () => {
   return api.get(`/todos/`);
 };
-// 新增代辦事項
+// 新增待辦事項
 // const data = {
 //   content: "", //string
 // }
 export const postTodoList = (data) => {
   return api.post(`/todos/`, data);
 };
-// 更新代辦事項
+// 更新待辦事項
 // const data = {
 //   content: "", //string
 // }
 export const updataTodoList = (id, data) => {
   return api.put(`/todos/${id}`, data);
 };
-// 刪除代辦事項
+// 刪除待辦事項
 export const delTodoList = (id) => {
   return api.delete(`/todos/${id}`);
 };
-// 變更代辦事項狀態
+// 變更待辦事項狀態
 export const changeTodoListStatus = (id) => {
   return api.patch(`/todos/${id}/toggle`);
 };

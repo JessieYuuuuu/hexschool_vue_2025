@@ -13,7 +13,7 @@
       </div>
       <div>
         <form class="formControls" @submit.prevent="debounceSubmit">
-          <h2 class="formControls_txt">{{ isLogin ? '最實用的線上代辦事項服務' : '註冊帳號' }}</h2>
+          <h2 class="formControls_txt">{{ isLogin ? '最實用的線上待辦事項服務' : '註冊帳號' }}</h2>
           <template v-for="input in inputList" :key="input.key">
             <text-input :modelValue="userInput[input.key]" v-if="input.show" :label="input.label" :type="input.key"
               :labelKey="input.key" @update:input="val => debounceInput(input.key, val)" required

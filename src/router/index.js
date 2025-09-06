@@ -40,7 +40,7 @@ const routes = [
       },
       {
         path: "to-do-list",
-        name: "代辦主頁面",
+        name: "待辦主頁面",
         component: () => import("../views/FinalMissions/components/ToDoList.vue"),
       },
     ],
