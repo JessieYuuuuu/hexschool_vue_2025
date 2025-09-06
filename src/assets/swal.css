@@ -4,6 +4,8 @@
   height: 50px;
   border-radius: 30px;
   margin: 0 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.02s linear;
 }
 
 /* 正向按鈕 */
@@ -11,11 +13,29 @@
   background: #165dff;
   color: #fff;
 }
+.btn-success:hover {
+  background: #0b4ae6; /* 稍微加深 */
+  box-shadow: 0 6px 16px rgba(22, 93, 255, 0.28);
+}
 
 /* 負向按鈕 */
 .btn-danger {
   background: #dc2626;
   color: #fff;
+}
+.btn-danger:hover {
+  background: #b91c1c;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.28);
+}
+
+/* 取消按鈕 */
+.btn-info {
+  background: #d5d6d8;
+  color: #000;
+}
+.btn-info:hover {
+  background: #c7c9cc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* 按鈕外框 */
