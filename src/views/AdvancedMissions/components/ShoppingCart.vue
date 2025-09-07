@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-20 right-4 min-w-[380px] bg-amber-200 p-3 border-radius rounded-4xl">
+  <div class="min-w-[380px] bg-amber-200 p-3 border-radius rounded-4xl">
     <h2 class="text-2xl font-semibold py-4 px-2">購物車</h2>
     <div class="max-h-[500px] overflow-hidden flex flex-col">
       <div v-if="cartItems.length === 0" class="p-4 bg-white rounded shadow flex flex-col items-center">

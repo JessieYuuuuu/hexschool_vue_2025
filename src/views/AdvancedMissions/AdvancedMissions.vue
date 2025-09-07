@@ -1,23 +1,17 @@
 <template>
-  <div class=" max-h-screen mt-[1000px] flex flex-col items-center justify-center bg-gray-50">
+  <div class="max-h-screen mt-[100px] bg-gray-50">
     <full-screen-loading :isLoading="loading" />
-    <div id="app" class="w-full max-w-7xl px-4 py-6">
-      <div class="flex flex-col md:flex-row gap-6">
-        <!-- 商品列表區 -->
-        <div class="w-full md:w-8/12">
-          <product-list />
-        </div>
-
-        <!-- 購物車區 -->
-        <div class="w-full md:w-4/12">
-          <shopping-cart />
-        </div>
-      </div>
-
-      <!-- 通知元件 -->
-      <notify v-if="showToast" :type="toast.Type" :message="toast.Message" @close="showToast = false" :key="showType" />
+    <!-- 商品列表區 -->
+    <div id="app" class="w-full pr-[200px]">
+      <product-list />
+    </div>
+    <!-- 購物車區 -->
+    <div class="fixed top-20 right-4 ">
+      <shopping-cart />
     </div>
   </div>
+  <!-- 通知元件 -->
+  <notify v-if="showToast" :type="toast.Type" :message="toast.Message" @close="showToast = false" :key="showType" />
 </template>
 <script setup>
 import { provide, readonly, ref } from "vue";
