@@ -10,16 +10,6 @@
 
         <!-- 購物車區 -->
         <div class="w-full md:w-4/12">
-          <div class="mb-4 flex flex-wrap gap-2">
-            <button @click="triggerToast('success', '成功加入購物車！')"
-              class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition">
-              觸發成功提示
-            </button>
-            <button @click="triggerToast('error', '新增失敗！請稍後再試')"
-              class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded transition">
-              觸發錯誤提示
-            </button>
-          </div>
           <shopping-cart />
         </div>
       </div>
