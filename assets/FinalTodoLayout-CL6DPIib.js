@@ -1,1 +1,0 @@
-import{_ as e,y as t,k as c,o as n}from"./index-BB7fzNFv.js";const r={};function a(s,_){const o=c("RouterView");return n(),t(o)}const p=e(r,[["render",a],["__scopeId","data-v-b466bd00"]]);export{p as default};
